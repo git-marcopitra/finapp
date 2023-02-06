@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text, StyleSheet, View, Alert } from "react-native";
 
@@ -14,7 +14,7 @@ import { useUser } from "../hooks/use-user";
 
 const LoginScreen: FC = () => {
   const { navigate } = useNavigation();
-  const { updateUser } = useUser();
+  const { updateUser, isLogged } = useUser();
 
   const { setValue, handleSubmit } = useForm({
     defaultValues: {
@@ -23,6 +23,10 @@ const LoginScreen: FC = () => {
       passwordConfirm: "",
     },
   });
+
+  useEffect(() => {
+    if (isLogged) navigate("Home" as never);
+  }, [isLogged]);
 
   const onSubmit = async ({ email, password, passwordConfirm }) => {
     try {

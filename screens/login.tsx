@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { onValue, ref } from "firebase/database";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text, StyleSheet, View, Alert } from "react-native";
 import { Button, Layout } from "../components";
@@ -12,7 +12,7 @@ import { useUser } from "../hooks/use-user";
 const LoginScreen: FC = () => {
   const { navigate } = useNavigation();
 
-  const { updateUser } = useUser();
+  const { updateUser, isLogged } = useUser();
 
   const { setValue, handleSubmit } = useForm({
     defaultValues: {
@@ -20,6 +20,10 @@ const LoginScreen: FC = () => {
       password: "",
     },
   });
+
+  useEffect(() => {
+    if (isLogged) navigate("Home" as never);
+  }, [isLogged]);
 
   const onSubmit = async ({ email, password }) => {
     try {
@@ -52,11 +56,14 @@ const LoginScreen: FC = () => {
     <Layout>
       <View style={loginStyles.wrapper}>
         <Text style={loginStyles.title}>Login</Text>
-        <TextField placeholder="Email" onChangeText={handleChangeText('email')} />
+        <TextField
+          placeholder="Email"
+          onChangeText={handleChangeText("email")}
+        />
         <TextField
           secureTextEntry
           placeholder="Senha"
-          onChangeText={handleChangeText('password')}
+          onChangeText={handleChangeText("password")}
         />
         <Button variant="primary" onPress={handleSubmit(onSubmit)}>
           Entrar

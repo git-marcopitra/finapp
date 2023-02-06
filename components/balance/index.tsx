@@ -6,9 +6,11 @@ const Balance: FC = () => {
   const { user } = useUser();
 
   const totalIncomes =
-    user?.incomes.reduce((acc, { amount }) => acc + amount, 0) ?? 0;
+    user?.incomes?.reduce((acc, { amount }) => acc + amount, 0) ?? 0;
   const totalCosts =
-    user?.costs.reduce((acc, { amount }) => acc + amount, 0) ?? 0;
+    user?.costs?.reduce((acc, { amount }) => acc + amount, 0) ?? 0;
+
+  const rate = totalIncomes / totalCosts;
 
   return (
     <View>
@@ -29,8 +31,16 @@ const Balance: FC = () => {
               </View>
             </View>
             <View style={balanceStyles.othersWrapper}>
-              <View style={balanceStyles.totalRateWrapper}>
-                <Text style={balanceStyles.totalRate}>+4.24%</Text>
+              <View
+                style={{
+                  ...balanceStyles.totalRateWrapper,
+                  backgroundColor: rate < 1 ? '#c32': "#5c7",
+                }}
+              >
+                <Text style={balanceStyles.totalRate}>
+                  {rate < 1 ? "-" : "+"}
+                  {rate.toPrecision(2)}%
+                </Text>
               </View>
               <View style={balanceStyles.balanceBottom}>
                 <Text style={balanceStyles.balanceBottomText}>
@@ -76,7 +86,6 @@ const balanceStyles = StyleSheet.create({
     paddingRight: 12,
     paddingBottom: 6,
     borderRadius: 20,
-    backgroundColor: "#5c7",
   },
   totalRate: {
     color: "#fff",
