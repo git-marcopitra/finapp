@@ -2,11 +2,10 @@ import { createContext, FC, PropsWithChildren, useState } from "react";
 
 interface IOperation {
   type: string;
-  amount: string;
+  amount: number;
 }
 
 export interface IUser {
-  balance: 0;
   uid: string;
   email: string;
   costs: ReadonlyArray<IOperation>;

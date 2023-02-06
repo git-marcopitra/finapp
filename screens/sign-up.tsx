@@ -41,7 +41,6 @@ const LoginScreen: FC = () => {
         email,
         costs: [],
         incomes: [],
-        balance: 0,
         uid: userCredential.user.uid,
       };
 
