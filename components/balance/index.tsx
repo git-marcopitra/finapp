@@ -8,9 +8,23 @@ const Balance: FC = () => (
       <View style={balanceStyles.leftBar} />
       <View>
         <View style={balanceStyles.totalBalanceWrapper}>
-          <Text style={balanceStyles.totalBalance}>489,00 AKZ</Text>
-          <View style={balanceStyles.totalRateWrapper}>
-            <Text style={balanceStyles.totalRate}>+4.24%</Text>
+          <View>
+            <Text style={balanceStyles.totalBalance}>489,00 AKZ</Text>
+            <View style={balanceStyles.balanceBottom}>
+              <Text style={balanceStyles.balanceBottomText}>
+                Rendimento {">"}
+              </Text>
+              <Text>1.950.000,00 AKZ</Text>
+            </View>
+          </View>
+          <View style={balanceStyles.othersWrapper}>
+            <View style={balanceStyles.totalRateWrapper}>
+              <Text style={balanceStyles.totalRate}>+4.24%</Text>
+            </View>
+            <View style={balanceStyles.balanceBottom}>
+              <Text style={balanceStyles.balanceBottomText}>Gastos {">"}</Text>
+              <Text>250.000,00 AKZ</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -42,16 +56,27 @@ const balanceStyles = StyleSheet.create({
     fontSize: 25,
   },
   totalRateWrapper: {
+    width: "auto",
     paddingTop: 6,
     paddingLeft: 12,
     paddingRight: 12,
     paddingBottom: 6,
-    marginLeft: 40,
     borderRadius: 20,
     backgroundColor: "#5c7",
   },
   totalRate: {
     color: "#fff",
+  },
+  othersWrapper: {
+    marginLeft: 40,
+    alignItems: "flex-start",
+  },
+  balanceBottom: {
+    marginTop: 20,
+  },
+  balanceBottomText: {
+    marginBottom: 10,
+    color: "#aaa",
   },
 });
 

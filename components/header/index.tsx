@@ -1,11 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
+import { signOut } from "firebase/auth";
 import { FC } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { auth } from "../../config/firebase";
+import { useUser } from "../../hooks/use-user";
 import Logo from "../logo";
 import { LogoutSVG } from "../svg";
 
 const Header: FC = () => {
   const { navigate } = useNavigation();
+
+  const { updateUser } = useUser();
+
+  const logout = () => {
+    signOut(auth);
+    updateUser(null);
+    navigate("Login" as never);
+  }
 
   return (
     <View style={headerStyles.wrapper}>
@@ -14,7 +25,7 @@ const Header: FC = () => {
       </View>
       <View style={headerStyles.userWrapper}>
         <View style={headerStyles.user} />
-        <TouchableOpacity onPress={() => navigate("Login" as never)}>
+        <TouchableOpacity onPress={logout}>
           <LogoutSVG />
         </TouchableOpacity>
       </View>
